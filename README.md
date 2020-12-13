@@ -35,6 +35,7 @@ The repository contains tree different ways of answering the https://www.hackerr
 The goal of this problem is to find the number of occurrence of a list of queries in a list of strings.
 
 The strings list will be read as the environment variable *SPARSE_ARRAY_STRINGS*:
+
 `example` : *export SPARSE_ARRAY_STRINGS=ab,ab,abc*
 
 ### Part 1 : Run the script with python by passing the list of queries as parameters.
