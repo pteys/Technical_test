@@ -34,7 +34,7 @@ The repository also contains an SQL_queries respository answering another test t
 The repository contains tree different ways of answering the https://www.hackerrank.com/challenges/sparse-arrays/problem problem.
 The goal of this problem is to find the number of occurrence of a list of queries in a list of strings.
 
-*Examples :
+Examples :
 - input :    
     - strings = "ab,ab,abc"
     - queries = "ab,abc,bc"
@@ -67,27 +67,26 @@ Run the container: ```sh docker run -t test_mdm ab,abc,bc ```
 ### Part 3 : Run the script as a Flask API documented by a swagger inside a docker.
 
 #### Docker usage
-Build the image:  ```sh docker build . -t test_mdm*```
+Build the image:  ```sh docker build . -t test_mdm```
 
 Run the container: ```sh docker run -d -p 5000:5000 test_mdm ```
 
 #### Using the Flask app
 
-The Flask API run at http://0.0.0.0:5000/
-
-Swagger documentation : http://0.0.0.0:5000/swagger
-
-API endpoint : http://0.0.0.0:5000/api/sparsearray
+-The Flask API run at http://0.0.0.0:5000/
+-Swagger documentation : http://0.0.0.0:5000/swagger
+-API endpoint : http://0.0.0.0:5000/api/sparsearray
 
 The API endpoint expect a POST request with a json body containing a "queries" parameter:
+```sh
 {
   "queries":"ab,abc,bc"
 }
-
+```
 Exemple request:
-
+```sh
 curl -X POST "http://0.0.0.0:5000/api/sparsearray" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{ \"queries\":\"ab,abc,bc\"}"
-
+```
 
 <!-- CONTACT -->
 ## Contact
