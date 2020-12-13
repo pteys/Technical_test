@@ -1,5 +1,5 @@
 SELECT date, sum(prod_price*prod_qty) as ventes
 FROM TRANSACTIONS
-WHERE date between '31/12/19' AND '01/01/21'
+WHERE date between '2019/12/31' AND '2021/01/01'
 GROUP BY date
 ORDER BY date ASC
