@@ -1,0 +1,34 @@
+swagger: "2.0"
+info:
+  description: Swagger of the Flask API answering the https://www.hackerrank.com/challenges/sparse-arrays/problem problem
+  version: "1.0.0"
+  title: Swagger SparseArray Flask API
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+
+basePath: "/api"
+
+paths:
+  /sparsearray:
+    post:
+      summary: Returns the occurences of a list of queries inside a list of strings.
+      description: Take a list of queries in JSON format count its occurences in the SPARSE_ARRAY_STRINGS environment variable.
+      parameters:
+        - name: queries
+          in: body
+          description: The list of queries
+          required: true
+          schema:
+            type: string
+            default: "{  \"queries\":\"ab,abc,bc\"}"
+      responses:
+        '201':    # status code
+          description: A JSON array of occurences of the queries.
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
