@@ -34,9 +34,28 @@ The repository also contains an SQL_queries respository answering another test t
 The repository contains tree different ways of answering the https://www.hackerrank.com/challenges/sparse-arrays/problem problem.
 The goal of this problem is to find the number of occurrence of a list of queries in a list of strings.
 
+Examples :
+- input :    
+    - strings = "ab,ab,abc"
+    - queries = "ab,abc,bc"
+- output :
+{
+  "ab": 2, 
+  "abc": 1, 
+  "bc": 0
+}
+
 The strings list will be read as the environment variable *SPARSE_ARRAY_STRINGS*:
 
 `example` : *export SPARSE_ARRAY_STRINGS=ab,ab,abc*
+
+The queries list will be given as a parameter in three different ways: 
+
+1) As a parameter
+
+2) As a parameter inside a docker
+
+3) As a POST request.
 
 ### Part 1 : Run the script with python by passing the list of queries as parameters.
 
