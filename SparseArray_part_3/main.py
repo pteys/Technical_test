@@ -5,8 +5,9 @@ from flask_swagger_ui import get_swaggerui_blueprint
 
 
 app = Flask(__name__)    
-
-#swagger specific 
+"""
+swagger declaration
+"""
 SWAGGER_URL = '/swagger'
 API_URL = '/static/swagger.yml'
 SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
@@ -18,14 +19,19 @@ SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
 )
 app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
 
-
+"""
+API Endpoint declaration
+"""
 @app.route('/api/sparsearray', methods=['POST'])
 def sparsearray():
-
-    #Get the SPARSE_ARRAY_STRINGS environment variable as a list of strings
+    """
+    Get the SPARSE_ARRAY_STRINGS environment variable as a list of strings
+    """
     strings = os.environ.get('SPARSE_ARRAY_STRINGS').split(',') 
 
-    #Get a list of query as a Get request of format json
+    """
+    Get a list of query as a Get request of format json
+    """
     if not request.json or not 'queries' in request.json:
         abort(400)        
     task = {
@@ -33,8 +39,10 @@ def sparsearray():
             }
     queries = task['queries'].split(',')
 
-    #Apply the matching_string() function of class SparseArray
-    #to the list of query and the list of strings     
+    """
+    Apply the matching_string() function of class SparseArray
+    to the list of query and the list of strings 
+    """    
     with SparseArray(strings,queries) as sparse_array:
         return jsonify(sparse_array.matching_strings()), 201
    

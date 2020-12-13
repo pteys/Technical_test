@@ -14,11 +14,15 @@ def main():
     args = parser.parse_args()
     queries = args.queries[0].split(',')
 
-    #Get the SPARSE_ARRAY_STRINGS environment variable as a list of strings
+    """
+    Get the SPARSE_ARRAY_STRINGS environment variable as a list of strings
+    """
     strings = os.environ.get('SPARSE_ARRAY_STRINGS').split(',')
     
-    #Apply the matching_string() function of class SparseArray
-    #to the list of query and the list of strings     
+    """  
+    Apply the matching_string() function of class SparseArray
+    to the list of query and the list of strings 
+    """    
     with SparseArray(strings,queries) as sparse_array:
         print(sparse_array.matching_strings())
 

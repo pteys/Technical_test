@@ -14,11 +14,12 @@ class SparseArray:
             print(f'exc_type: {exc_type}')
             print(f'exc_value: {exc_value}')
             print(f'exc_traceback: {exc_traceback}')
-
-    #Self as an initialized SparseArray
-        #For each query in self.queries[]
-        #Count the number of occurrences in self.strings[]
-        #Returns q_results{}: count of occurrences of queries[] in strings[]            
+    """
+    Self as an initialized SparseArray instance
+        For each query in self.queries[]
+        Count the number of occurrences in self.strings[]
+        Returns q_results{}: count of occurrences of queries[] in strings[]   
+    """         
     def matching_strings(self):
         q_results = {}      
         for query in self.queries:
