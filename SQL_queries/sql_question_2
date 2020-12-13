@@ -1,16 +1,16 @@
-CREATE VIEW meuble as
-SELECT t.client_id as client_id, sum(t.prod_price*t.prod_qty) as achats_meuble
+CREATE VIEW meuble AS
+SELECT t.client_id AS client_id, SUM(t.prod_price*t.prod_qty) AS achats_meuble
 FROM TRANSACTIONS t
 WHERE t.date between '2019/12/31' AND '2021/01/01'
-INNER JOIN PRODUCT_NOMENCLATURE p ON p.product_id=t.prod_id and p.product_type = "MEUBLE"
+INNER JOIN PRODUCT_NOMENCLATURE p ON p.product_id=t.prod_id AND p.product_type = "MEUBLE"
 GROUP BY client_id;
-CREATE VIEW deco as
-SELECT t.client_id as client_id, sum(t.prod_price*t.prod_qty) as achats_deco 
+CREATE VIEW deco AS
+SELECT t.client_id AS client_id, SUM(t.prod_price*t.prod_qty) AS achats_deco 
 FROM TRANSACTIONS t
-WHERE t.date between '2019/12/31' AND '2021/01/01'
-INNER JOIN PRODUCT_NOMENCLATURE p ON p.product_id=t.prod_id and p.product_type = "DECO"
+WHERE t.date BETWEEN '2019/12/31' AND '2021/01/01'
+INNER JOIN PRODUCT_NOMENCLATURE p ON p.product_id=t.prod_id AND p.product_type = "DECO"
 GROUP BY client_id;
-SELECT t.client_id as client_id, meuble.achats_meuble as ventes_meuble, deco.achats_deco as ventes_deco
+SELECT t.client_id AS client_id, meuble.achats_meuble AS ventes_meuble, deco.achats_deco AS ventes_deco
 FROM TRANSACTIONS t
 LEFT JOIN meuble ON t.client_id=meuble.client_id
 LEFT JOIN deco ON t.client_id=deco.client_id
