@@ -2,7 +2,7 @@
 WITH meuble AS (
 	SELECT 
 		t.client_id AS client_id, 
-		sum(t.prod_price*t.prod_qty) AS achats_meuble
+		SUM(t.prod_price*t.prod_qty) AS achats_meuble
 	FROM TRANSACTIONS t
 	WHERE t.date BETWEEN '2019/12/31' AND '2021/01/01'
 	INNER JOIN PRODUCT_NOMENCLATURE p 
