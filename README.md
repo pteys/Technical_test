@@ -34,7 +34,7 @@ The repository also contains an SQL_queries respository answering another test t
 The repository contains tree different ways of answering the https://www.hackerrank.com/challenges/sparse-arrays/problem problem.
 The goal of this problem is to find the number of occurrence of a list of queries in a list of strings.
 
-Examples :
+*Examples :
 - input :    
     - strings = "ab,ab,abc"
     - queries = "ab,abc,bc"
