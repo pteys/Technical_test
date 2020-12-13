@@ -61,16 +61,16 @@ The queries list will be given as a parameter in three different ways:
    python -m main ab,abc,bc
    ```
 ### Part 2 : Run the script with docker by passing the list of queries as parameters.
-Build the image:  ```sh docker build . -t test_mdm```
+Build the image:  ```docker build . -t test_mdm```
 
-Run the container: ```sh docker run -t test_mdm ab,abc,bc ```
+Run the container: ```docker run -t test_mdm ab,abc,bc ```
 
 ### Part 3 : Run the script as a Flask API documented by a swagger inside a docker.
 
 #### Docker usage
-Build the image:  ```sh docker build . -t test_mdm```
+Build the image:  ```docker build . -t test_mdm```
 
-Run the container: ```sh docker run -d -p 5000:5000 test_mdm ```
+Run the container: ```docker run -d -p 5000:5000 test_mdm ```
 
 #### Using the Flask app
 
