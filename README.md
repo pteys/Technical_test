@@ -72,7 +72,7 @@ Build the image:  ```docker build . -t test_mdm```
 
 Run the container: ```docker run -d -p 5000:5000 test_mdm ```
 
-#### Using the Flask app
+#### Using the Flask API
 
 - The Flask API run at http://0.0.0.0:5000/
 - Swagger documentation : http://0.0.0.0:5000/swagger/
