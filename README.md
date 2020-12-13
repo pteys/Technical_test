@@ -45,18 +45,22 @@ The strings list will be read as the environment variable *SPARSE_ARRAY_STRINGS*
 ### Part 2 : Run the script with docker by passing the list of queries as parameters.
 
 Build the image: *docker build . -t test_mdm*
+
 Run the container: *docker run -t test_mdm ab,abc,bc*
 
 ### Part 3 : Run the script as a Flask API documented by a swagger inside a docker.
 
 #### Docker usage
 Build the image: *docker build . -t test_mdm*
+
 Run the container: *docker run -d -p 5000:5000 test_mdm*
 
 #### Using the Flask app
 
 The Flask API run at http://0.0.0.0:5000/
+
 Swagger documentation : http://0.0.0.0:5000/swagger
+
 API endpoint : http://0.0.0.0:5000/api/sparsearray
 
 The API endpoint expect a POST request with a json body containing a "queries" parameter:
@@ -65,6 +69,7 @@ The API endpoint expect a POST request with a json body containing a "queries" p
 }
 
 Exemple request:
+
 curl -X POST "http://0.0.0.0:5000/api/sparsearray" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{ \"queries\":\"ab,abc,bc\"}"
 
 
