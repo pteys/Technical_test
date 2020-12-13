@@ -46,33 +46,30 @@ Examples :
 }
 
 The strings list will be read as the environment variable *SPARSE_ARRAY_STRINGS*:
-
-`example` : *export SPARSE_ARRAY_STRINGS=ab,ab,abc*
-
+   ```sh
+   export SPARSE_ARRAY_STRINGS=ab,ab,abc
+   ```
 The queries list will be given as a parameter in three different ways: 
 
 1) As a parameter
-
 2) As a parameter inside a docker
-
 3) As a POST request.
 
 ### Part 1 : Run the script with python by passing the list of queries as parameters.
-
- *python -m main ab,abc,bc*
- 
+   ```sh
+   python -m main ab,abc,bc
+   ```
 ### Part 2 : Run the script with docker by passing the list of queries as parameters.
+Build the image:  ```sh docker build . -t test_mdm*```
 
-Build the image: *docker build . -t test_mdm*
-
-Run the container: *docker run -t test_mdm ab,abc,bc*
+Run the container: ```sh docker run -t test_mdm ab,abc,bc ```
 
 ### Part 3 : Run the script as a Flask API documented by a swagger inside a docker.
 
 #### Docker usage
-Build the image: *docker build . -t test_mdm*
+Build the image:  ```sh docker build . -t test_mdm*```
 
-Run the container: *docker run -d -p 5000:5000 test_mdm*
+Run the container: ```sh docker run -d -p 5000:5000 test_mdm ```
 
 #### Using the Flask app
 
