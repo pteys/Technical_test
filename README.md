@@ -4,7 +4,7 @@ A repository containing a technical test based on https://www.hackerrank.com/cha
 We will answer this problem using several variation modeling real life usage.
 The repository also contains an SQL_queries respository answering another test that won't be detailed.
 
-<!-- GETTING STARTED -->
+<!-- PREREQUISITES -->
 ### Prerequisites
 
 To run the different tests you will need to have installed :
@@ -18,7 +18,7 @@ To run the different tests you will need to have installed :
    git clone https://github.com/pteys/Technical_test.git
    ```
 
-<!-- USAGE EXAMPLES -->
+<!-- REPOSITORY STRUCTURE -->
 ## Repository structure
 
 The repository contains tree different ways of answering the https://www.hackerrank.com/challenges/sparse-arrays/problem problem.
@@ -28,7 +28,7 @@ The repository contains tree different ways of answering the https://www.hackerr
 - *Part 3 :* A Server version emulated by a docker running a Rest API
 
 The repository also contains an SQL_queries respository answering another test that won't be detailed.
-
+<!-- USAGE -->
 ## Usage
 
 The repository contains tree different ways of answering the https://www.hackerrank.com/challenges/sparse-arrays/problem problem.
@@ -77,7 +77,7 @@ Run the container: ```sh docker run -d -p 5000:5000 test_mdm ```
 - Swagger documentation : http://0.0.0.0:5000/swagger
 - API endpoint : http://0.0.0.0:5000/api/sparsearray
 
-The API endpoint expect a POST request with a json body containing a "queries" parameter:
+The API endpoint expect a POST request with a json body containing the "queries" parameter:
 ```sh
 {
   "queries":"ab,abc,bc"
