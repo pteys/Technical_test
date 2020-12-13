@@ -57,6 +57,7 @@ The queries list will be given as a parameter in three different ways:
 
 ### Part 1 : Run the script with python by passing the list of queries as parameters.
    ```sh
+   export SPARSE_ARRAY_STRINGS=ab,ab,abc
    python -m main ab,abc,bc
    ```
 ### Part 2 : Run the script with docker by passing the list of queries as parameters.
