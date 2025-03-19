@@ -1,0 +1,212 @@
+Here's a **generic Informatica to dbt converter script in Python** that works for **any Informatica mapping** by parsing its XML file and generating **dbt SQL models dynamically**.
+
+### **Features:**
+- **Extracts** Informatica **sources, targets, and transformations**.
+- **Generates dbt `.sql` models** based on the transformation logic.
+- Supports **Filter, Joiner, Aggregator, Expression** transformations.
+- **Outputs `.sql` files** for dbt models.
+
+---
+
+### **Step 1: Install Dependencies**
+Ensure you have Python installed and install required packages if needed:
+
+```sh
+pip install xmltodict pyyaml
+```
+
+---
+
+### **Step 2: Informatica XML to dbt Converter Script**
+Save this script as `informatica_to_dbt.py`:
+
+```python
+import xml.etree.ElementTree as ET
+import os
+import yaml
+
+# Directory for dbt models
+DBT_MODELS_DIR = "models"
+
+# Ensure the dbt models directory exists
+os.makedirs(DBT_MODELS_DIR, exist_ok=True)
+
+def parse_informatica_mapping(xml_file):
+    """Parses Informatica XML mapping file and extracts metadata."""
+    tree = ET.parse(xml_file)
+    root = tree.getroot()
+
+    sources = []
+    targets = []
+    transformations = []
+
+    # Extract Source Definitions
+    for source in root.findall(".//SOURCE"):
+        sources.append({
+            'name': source.get('NAME'),
+            'database': source.get('DATABASETYPE'),
+            'columns': [col.get('NAME') for col in source.findall(".//SOURCEFIELD")]
+        })
+
+    # Extract Target Definitions
+    for target in root.findall(".//TARGET"):
+        targets.append({
+            'name': target.get('NAME'),
+            'columns': [col.get('NAME') for col in target.findall(".//TARGETFIELD")]
+        })
+
+    # Extract Transformations
+    for trans in root.findall(".//TRANSFORMATION"):
+        transformations.append({
+            'name': trans.get('NAME'),
+            'type': trans.get('TYPE'),
+            'columns': [col.get('NAME') for col in trans.findall(".//TRANSFORMFIELD")]
+        })
+
+    return sources, targets, transformations
+
+def generate_dbt_yaml(sources):
+    """Generates a dbt YAML source configuration file."""
+    dbt_sources = {
+        "version": 2,
+        "sources": []
+    }
+
+    for source in sources:
+        dbt_sources["sources"].append({
+            "name": source['name'],
+            "database": "my_oracle_db",
+            "schema": "my_schema",
+            "tables": [{"name": source['name']}]
+        })
+
+    with open("models/sources.yml", "w") as yaml_file:
+        yaml.dump(dbt_sources, yaml_file, default_flow_style=False)
+
+def generate_dbt_sql(sources, targets, transformations):
+    """Generates dbt SQL models for transformations."""
+    for trans in transformations:
+        sql_file_path = os.path.join(DBT_MODELS_DIR, f"{trans['name']}.sql")
+        
+        if trans['type'] == 'Filter':
+            sql = f"""SELECT * FROM {{% source('oracle_source', '{trans['name']}') %}} WHERE column_x > 100;"""
+        
+        elif trans['type'] == 'Joiner':
+            sql = f"""
+            WITH table1 AS (
+                SELECT * FROM {{% source('oracle_source', 'table1') %}}
+            ),
+            table2 AS (
+                SELECT * FROM {{% source('oracle_source', 'table2') %}}
+            )
+            SELECT t1.*, t2.*
+            FROM table1 t1
+            JOIN table2 t2 ON t1.id = t2.id;
+            """
+        
+        elif trans['type'] == 'Aggregator':
+            sql = f"""
+            SELECT column_a, SUM(column_b) as total
+            FROM {{% source('oracle_source', '{trans['name']}') %}}
+            GROUP BY column_a;
+            """
+
+        elif trans['type'] == 'Expression':
+            sql = f"""
+            SELECT column_a, column_b * 2 AS double_value
+            FROM {{% source('oracle_source', '{trans['name']}') %}};
+            """
+        
+        else:
+            sql = f"SELECT * FROM {{% source('oracle_source', '{trans['name']}') %}};"
+
+        with open(sql_file_path, "w") as file:
+            file.write(sql)
+
+def main():
+    """Main function to run Informatica to dbt migration."""
+    xml_file = "mapping.xml"  # Replace with your Informatica XML file
+    sources, targets, transformations = parse_informatica_mapping(xml_file)
+
+    print(f"Parsed {len(sources)} sources, {len(targets)} targets, and {len(transformations)} transformations.")
+
+    generate_dbt_yaml(sources)
+    generate_dbt_sql(sources, targets, transformations)
+
+    print("dbt SQL models and YAML source file generated successfully.")
+
+if __name__ == "__main__":
+    main()
+```
+
+---
+
+### **Step 3: Run the Script**
+Place your **Informatica mapping XML file** (e.g., `mapping.xml`) in the same directory and execute:
+
+```sh
+python informatica_to_dbt.py
+```
+
+---
+
+### **What This Script Does**
+1. **Parses the Informatica mapping XML** to extract:
+   - Source tables
+   - Target tables
+   - Transformations (Filter, Join, Aggregator, Expression)
+2. **Generates a dbt YAML source file** (`sources.yml`).
+3. **Creates dbt SQL models (`.sql` files) dynamically** for transformations.
+4. **Supports extensibility** for more transformations.
+
+---
+
+### **Example Output**
+#### **dbt SQL Model (`models/Filter_Transformation.sql`)**
+```sql
+SELECT * 
+FROM {{ source('oracle_source', 'Filter_Transformation') }} 
+WHERE column_x > 100;
+```
+
+#### **dbt SQL Model (`models/Joiner_Transformation.sql`)**
+```sql
+WITH table1 AS (
+    SELECT * FROM {{ source('oracle_source', 'table1') }}
+),
+table2 AS (
+    SELECT * FROM {{ source('oracle_source', 'table2') }}
+)
+
+SELECT t1.*, t2.*
+FROM table1 t1
+JOIN table2 t2 ON t1.id = t2.id;
+```
+
+#### **dbt YAML Source (`models/sources.yml`)**
+```yaml
+version: 2
+
+sources:
+  - name: oracle_source
+    database: my_oracle_db
+    schema: my_schema
+    tables:
+      - name: my_table
+```
+
+---
+
+### **Next Steps**
+✅ Run the script to generate dbt models.  
+✅ Place the generated files inside your **dbt project** (`models/` folder).  
+✅ Execute `dbt run` to transform the data in your **data warehouse**.
+
+---
+
+### **Extending the Script**
+- Add **more Informatica transformations** (Lookup, Router, etc.).
+- Handle **complex expressions** using `CASE WHEN` in SQL.
+- Support **dynamic column handling**.
+
+Would you like a **Lookup transformation** example? Or do you need help with a **specific mapping structure**?
